@@ -1,0 +1,3 @@
+wenn nicht anders geht wegen spezialisierung von tree und/oder inheritance,
+können auch die modelle mit dem data mapper gemacht werden, die klasse des data mappers
+extended dann einfach das interface und die attribute müssen wiederholt werden
