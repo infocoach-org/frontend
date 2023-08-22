@@ -17,6 +17,9 @@ export function formHandler<
   ): Kit.MaybePromise<Response> => {
     return requestEvent.request
       .json()
+      .catch((_) => {
+        throw error(400, { message: "could not open json" });
+      })
       .then((data) => {
         const result = jsonForm.safeParse(data);
         if (result.success) {
@@ -28,9 +31,6 @@ export function formHandler<
         } else {
           throw error(400, { message: result.error.message });
         }
-      })
-      .catch((_) => {
-        throw error(400, { message: "could not open json" });
       });
   };
 }

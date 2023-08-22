@@ -28,7 +28,7 @@ export class AuthRepository implements IAuthRepository {
       throw error(403);
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    await this.teacherRepo.create({ email, passwordHash });
+    await this.teacherRepo.insert({ email, passwordHash });
   }
   async signInTeacher(email: string, password: string): Promise<JWTUserData> {
     const teacher = await this.teacherRepo.findOneBy({ email });
@@ -36,8 +36,8 @@ export class AuthRepository implements IAuthRepository {
       throw error(401);
     }
     const passwordCorrect = await bcrypt.compare(
-      teacher!.passwordHash,
-      password
+      password,
+      teacher!.passwordHash
     );
     if (!passwordCorrect) {
       throw error(401);
