@@ -6,6 +6,7 @@ import { nodeLoaderPlugin } from "@vavite/node-loader/plugin";
 export default defineConfig({
   plugins: [sveltekit(), nodeLoaderPlugin()], // nodeLoaderPlugin new, may cause problems, sollte prob nicht in prod sein
   logLevel: "info",
+  envPrefix: "CLIENT_",
   build: {
     sourcemap: true, // new, may cause problems
   },
