@@ -1,4 +1,4 @@
-import type Setting from "$lib/domain/setting";
+import type Setting from "$lib/shared/domain/setting";
 import { inject, injectable, singleton } from "tsyringe";
 import { DataSource, Equal, type Repository } from "typeorm";
 import SettingEntity from "../database/entity/setting";
@@ -17,13 +17,13 @@ export class SettingRepository implements ISettingRepository {
     this.repo = dataSource.getRepository(SettingEntity);
   }
 
-  async getSetting(settingName: String): Promise<Setting | null> {
-    return await this.repo.findOneBy({ name: Equal(settingName) });
+  async getSetting(settingName: string): Promise<Setting | null> {
+    return await this.repo.findOneBy({ name: settingName });
   }
-  async setSetting(settingName: String, value: String): Promise<void> {
+  async setSetting(settingName: string, value: string): Promise<void> {
     this.repo.save({ name: settingName, value });
   }
-  async deleteSetting(settingName: String): Promise<void> {
+  async deleteSetting(settingName: string): Promise<void> {
     this.repo.delete({ name: Equal(settingName) });
   }
 }

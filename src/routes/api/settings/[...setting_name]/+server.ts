@@ -1,10 +1,8 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { z } from "zod";
 import { container } from "tsyringe";
 import SettingsService from "$lib/server/services/settings_service";
-
-const SettingValue = z.string().min(1);
+import SettingValue from "$lib/shared/forms/settingValue";
 
 const settingsService = container.resolve(SettingsService);
 

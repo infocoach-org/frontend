@@ -1,4 +1,4 @@
-import { inject, injectable, singleton } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import type { ISettingRepository } from "../repositories/setting_repository";
 
 @injectable()

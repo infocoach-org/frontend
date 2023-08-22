@@ -1,10 +1,8 @@
 import { container } from "tsyringe";
 import { dataSource } from "./database";
-import {
-  type ISettingRepository,
-  SettingRepository,
-} from "./repositories/setting_repository";
 import { DataSource } from "typeorm";
+import { SettingRepository } from "./repositories/setting_repository";
+import { AuthRepository } from "./repositories/auth_repository";
 
 export async function initializeServices() {
   console.log("started initializing");
@@ -13,10 +11,8 @@ export async function initializeServices() {
     container.register(DataSource, {
       useValue: dataSource,
     });
-    container.register<ISettingRepository>(
-      "ISettingRepository",
-      SettingRepository
-    );
+    container.register("ISettingRepository", SettingRepository);
+    container.register("IAuthRepository", AuthRepository);
   } catch (e) {
     console.error(e);
     process.exit(1);

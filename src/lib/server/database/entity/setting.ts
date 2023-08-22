@@ -1,4 +1,4 @@
-import type Setting from "$lib/domain/setting";
+import type Setting from "$lib/shared/domain/setting";
 import { EntitySchema } from "typeorm";
 
 const SettingEntity = new EntitySchema<Setting>({

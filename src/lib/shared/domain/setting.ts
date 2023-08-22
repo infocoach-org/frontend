@@ -1,4 +1,4 @@
 export default interface Setting {
-  name: String;
-  value: String;
+  name: string;
+  value: string;
 }
