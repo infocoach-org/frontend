@@ -1,5 +1,5 @@
 export default interface Teacher {
-  id: number;
+  accountId: number;
   email: string;
   passwordHash: string;
 }

@@ -4,16 +4,22 @@ import type Teacher from "$lib/shared/domain/teacher";
 const TeacherEntity = new EntitySchema<Teacher>({
   name: "teachers",
   columns: {
-    id: {
+    accountId: {
       type: Number,
       primary: true,
-      generated: true,
     },
     email: {
       type: String,
+      unique: true,
     },
     passwordHash: {
       type: String,
+    },
+  },
+  relations: {
+    accountId: {
+      type: "one-to-one",
+      target: "users",
     },
   },
 });

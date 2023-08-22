@@ -6,6 +6,8 @@ import { inject, injectable, singleton } from "tsyringe";
 import bcrypt from "bcrypt";
 import { error } from "@sveltejs/kit";
 import UserType from "$lib/shared/domain/user_type";
+import type Account from "$lib/shared/domain/account";
+import UserEntity from "../database/entity/user";
 
 export interface IAuthRepository {
   signUpTeacher(email: string, password: string): Promise<void>;
@@ -17,9 +19,11 @@ export interface IAuthRepository {
 @injectable()
 export class AuthRepository implements IAuthRepository {
   private teacherRepo: Repository<Teacher>;
+  private userRepo: Repository<Account>;
 
   constructor(@inject(DataSource) dataSource: DataSource) {
     this.teacherRepo = dataSource.getRepository(TeacherEntity);
+    this.userRepo = dataSource.getRepository(UserEntity);
   }
 
   async signUpTeacher(email: string, password: string): Promise<void> {
@@ -28,7 +32,9 @@ export class AuthRepository implements IAuthRepository {
       throw error(403);
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    await this.teacherRepo.insert({ email, passwordHash });
+    const user = this.userRepo.create();
+    await this.userRepo.save(user);
+    await this.teacherRepo.insert({ accountId: user.id, email, passwordHash });
   }
   async signInTeacher(email: string, password: string): Promise<JWTUserData> {
     const teacher = await this.teacherRepo.findOneBy({ email });
@@ -42,7 +48,7 @@ export class AuthRepository implements IAuthRepository {
     if (!passwordCorrect) {
       throw error(401);
     }
-    return { userId: teacher.id, userType: UserType.teacher };
+    return { userId: teacher.accountId, userType: UserType.teacher };
   }
   async signInParticipant(code: string): Promise<JWTUserData> {
     throw "";
