@@ -1,25 +1,19 @@
 import { EntitySchema } from "typeorm";
-import type Teacher from "$lib/shared/domain/teacher";
+import Teacher from "$lib/shared/domain/teacher";
+import AccountEntity from "./account";
 
 const TeacherEntity = new EntitySchema<Teacher>({
-  name: "teachers",
+  name: "teacher",
+  target: Teacher,
+  type: "entity-child",
   columns: {
-    accountId: {
-      type: Number,
-      primary: true,
-    },
+    ...AccountEntity.options.columns,
     email: {
       type: String,
       unique: true,
     },
     passwordHash: {
       type: String,
-    },
-  },
-  relations: {
-    accountId: {
-      type: "one-to-one",
-      target: "users",
     },
   },
 });

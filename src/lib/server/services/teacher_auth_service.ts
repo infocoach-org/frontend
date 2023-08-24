@@ -1,6 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import type { IAuthRepository } from "../repositories/auth_repository";
-import type UserData from "$lib/shared/domain/user_data";
+import type UserData from "$lib/shared/domain/account_info";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "$env/static/private";
 

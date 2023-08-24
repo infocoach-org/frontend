@@ -1,29 +1,29 @@
-import type JWTUserData from "$lib/shared/domain/user_data";
+import type AccountInfo from "$lib/shared/domain/account_info";
 import { DataSource, Repository } from "typeorm";
-import TeacherEntity from "../database/entity/teacher";
+import Teacher from "../database/entity/teacher";
 import type Teacher from "$lib/shared/domain/teacher";
 import { inject, injectable, singleton } from "tsyringe";
 import bcrypt from "bcrypt";
 import { error } from "@sveltejs/kit";
-import UserType from "$lib/shared/domain/user_type";
+import AccountType from "$lib/shared/domain/account_type";
 import type Account from "$lib/shared/domain/account";
-import UserEntity from "../database/entity/user";
+import AccountEntity from "../database/entity/account";
 
 export interface IAuthRepository {
   signUpTeacher(email: string, password: string): Promise<void>;
-  signInTeacher(email: string, password: string): Promise<JWTUserData>;
-  signInParticipant(code: string): Promise<JWTUserData>;
+  signInTeacher(email: string, password: string): Promise<AccountInfo>;
+  signInParticipant(code: string): Promise<AccountInfo>;
 }
 
 @singleton()
 @injectable()
 export class AuthRepository implements IAuthRepository {
   private teacherRepo: Repository<Teacher>;
-  private userRepo: Repository<Account>;
+  private accountRepo: Repository<Account>;
 
   constructor(@inject(DataSource) dataSource: DataSource) {
-    this.teacherRepo = dataSource.getRepository(TeacherEntity);
-    this.userRepo = dataSource.getRepository(UserEntity);
+    this.teacherRepo = dataSource.getRepository(Teacher);
+    this.accountRepo = dataSource.getRepository(AccountEntity);
   }
 
   async signUpTeacher(email: string, password: string): Promise<void> {
@@ -32,11 +32,9 @@ export class AuthRepository implements IAuthRepository {
       throw error(403);
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = this.userRepo.create();
-    await this.userRepo.save(user);
-    await this.teacherRepo.insert({ accountId: user.id, email, passwordHash });
+    await this.teacherRepo.insert({ email, passwordHash });
   }
-  async signInTeacher(email: string, password: string): Promise<JWTUserData> {
+  async signInTeacher(email: string, password: string): Promise<AccountInfo> {
     const teacher = await this.teacherRepo.findOneBy({ email });
     if (!teacher) {
       throw error(401);
@@ -48,9 +46,9 @@ export class AuthRepository implements IAuthRepository {
     if (!passwordCorrect) {
       throw error(401);
     }
-    return { userId: teacher.accountId, userType: UserType.teacher };
+    return { id: teacher.id, type: AccountType.teacher };
   }
-  async signInParticipant(code: string): Promise<JWTUserData> {
+  async signInParticipant(code: string): Promise<AccountInfo> {
     throw "";
   }
 }

@@ -2,7 +2,7 @@ import type Setting from "$lib/shared/domain/setting";
 import { EntitySchema } from "typeorm";
 
 const SettingEntity = new EntitySchema<Setting>({
-  name: "settings",
+  name: "setting",
   columns: {
     name: {
       type: String,

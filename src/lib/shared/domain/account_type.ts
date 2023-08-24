@@ -1,6 +1,6 @@
-const enum UserType {
+enum AccountType {
   teacher = "teacher",
   participant = "particpant",
 }
 
-export default UserType;
+export default AccountType;

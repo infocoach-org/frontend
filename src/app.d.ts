@@ -1,13 +1,13 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
-import type JWTUserData from "$lib/shared/domain/user_data";
+import type AccountInfo from "$lib/shared/domain/account_info";
 
 declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      userData?: JWTUserData;
+      userData?: AccountInfo;
     }
     // interface PageData {}
     // interface Platform {}

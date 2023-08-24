@@ -3,6 +3,7 @@ import { dataSource } from "./database";
 import { DataSource } from "typeorm";
 import { SettingRepository } from "./repositories/setting_repository";
 import { AuthRepository } from "./repositories/auth_repository";
+import AccountEntity from "./database/entity/account";
 
 export async function initializeServices() {
   console.log("started initializing");

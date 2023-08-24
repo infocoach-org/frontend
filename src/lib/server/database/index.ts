@@ -10,7 +10,7 @@ import {
 import { DataSource } from "typeorm";
 import SettingEntity from "./entity/setting";
 import TeacherEntity from "./entity/teacher";
-import UserEntity from "./entity/user";
+import AccountEntity from "./entity/account";
 
 export const dataSource = new DataSource({
   type: DB_TYPE as any,
@@ -21,6 +21,6 @@ export const dataSource = new DataSource({
   password: DB_PASSWORD,
   logging: true,
   synchronize: true,
-  entities: [SettingEntity, TeacherEntity, UserEntity],
+  entities: [SettingEntity, TeacherEntity, AccountEntity],
   // entities: [__dirname + "/entity/setting.ts"],
 });

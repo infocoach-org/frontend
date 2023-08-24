@@ -8,7 +8,7 @@ import jwt, {
   TokenExpiredError,
   type JwtPayload,
 } from "jsonwebtoken";
-import UserType from "$lib/shared/domain/user_type";
+import AccountType from "$lib/shared/domain/account_type";
 
 await initializeServices();
 
@@ -58,15 +58,15 @@ export const handle: Handle = async ({ event, resolve }) => {
     throw redirect(307, "/sign-in");
   }
   event.locals.userData = {
-    userId: jwtPayload.user_id,
-    userType: UserType.teacher,
+    id: jwtPayload.user_id,
+    type: AccountType.teacher,
   };
 
   const response = await resolve(event);
   return response;
 };
 
-export const handleError: HandleServerError = async () => {};
+// export const handleError: HandleServerError = async () => {};
 
 // TODO: handle and handleFetch
 
