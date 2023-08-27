@@ -21,7 +21,8 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run ESLint
-        run: npm run lint
+        run: |
+          npx eslint \"./src/**/*.{ts,svelte}\"
           --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
         continue-on-error: true
