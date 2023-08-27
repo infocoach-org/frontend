@@ -44,4 +44,4 @@ jobs:
       - name: Install Packages
         run: npm i
       - name: Run svelte-check
-        run: npm run svelte-check
+        run: npm run check
