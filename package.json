@@ -39,7 +39,7 @@
     "carbon-components-svelte": "^0.80.0",
     "eslint": "^8.48.0",
     "eslint-plugin-svelte": "^2.33.0",
-    "sass": "^1.65.1",
+    "sass": "^1.66.1",
     "svelte": "^4.2.0",
     "svelte-check": "^3.4.3",
     "tslib": "^2.6.2",
