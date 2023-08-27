@@ -12,7 +12,7 @@ const TeacherForm = zod.object({
     )
     .refine((s) => /\d/.test(s), "password should have at least one number")
     .refine(
-      (s) => /[#!"\$%&\/\\()=?*+'#-_\.:]/.test(s),
+      (s) => /[#!"$%&/\\()=?*+'#-_.:]/.test(s),
       "password should have at least one of: #!\"$%&/\\()=?*+'#-_.:"
     ),
 });

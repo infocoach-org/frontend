@@ -56,6 +56,6 @@ export class AuthRepository implements IAuthRepository {
     return { id: teacher.id, type: AccountType.teacher };
   }
   async signInParticipant(code: string): Promise<AccountInfo> {
-    throw "";
+    throw code;
   }
 }

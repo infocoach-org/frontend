@@ -1,5 +1,4 @@
 import {
-  DB_TYPE,
   DB_HOST,
   DB_PORT,
   DB_NAME,
@@ -14,14 +13,13 @@ import TeacherEntity from "./entity/teacher";
 import AccountEntity from "./entity/account";
 
 export const dataSource = new DataSource({
-  type: DB_TYPE as any,
+  type: "postgres",
   host: DB_HOST,
   port: parseInt(DB_PORT),
   database: DB_NAME,
   username: DB_USER,
   password: DB_PASSWORD,
-  logging: true,
-  loggerLevel: INFO_LOGGING === "TRUE" ? "debug" : "warn",
+  logging: INFO_LOGGING === "TRUE" ? "all" : ["error", "warn", "migration"],
   synchronize: true,
   entities: [SettingEntity, TeacherEntity, AccountEntity],
   // entities: [__dirname + "/entity/setting.ts"],

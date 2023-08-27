@@ -1,20 +1,19 @@
-import type Setting from "$lib/shared/domain/setting";
 import { inject, injectable, singleton } from "tsyringe";
-import { DataSource, Equal, type Repository } from "typeorm";
+import { DataSource, type Repository } from "typeorm";
 import SettingEntity from "../database/entity/setting";
 import AccountEntity from "../database/entity/account";
 
 export interface ISettingRepository {
   getSetting(
     accountId: number,
-    settingName: String
+    settingName: string
   ): Promise<SettingEntity | null>;
   setSetting(
     accountId: number,
-    settingName: String,
-    value: String
+    settingName: string,
+    value: string
   ): Promise<void>;
-  deleteSetting(accountId: number, settingName: String): Promise<void>;
+  deleteSetting(accountId: number, settingName: string): Promise<void>;
 }
 
 @singleton()

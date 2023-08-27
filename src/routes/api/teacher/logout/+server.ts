@@ -1,4 +1,3 @@
-import TeacherForm from "$lib/shared/forms/emailPasswordForm";
 import type { RequestHandler } from "./$types";
 import { HTTPS } from "$env/static/private";
 

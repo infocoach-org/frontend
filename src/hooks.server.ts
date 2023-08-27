@@ -71,8 +71,6 @@ export const handle: Handle = async ({ event, resolve }) => {
   return await resolve(event);
 };
 
-// export const handleError: HandleServerError = async () => {};
-
-// TODO: handle and handleFetch
-
-// TODO: handle errors from zod and typeorm and custom service or repo errors
+export const handleError: HandleServerError = async ({ error }) => {
+  console.error(error);
+};
