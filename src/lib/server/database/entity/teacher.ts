@@ -1,21 +1,14 @@
-import { EntitySchema } from "typeorm";
-import Teacher from "$lib/shared/domain/teacher";
+import { ChildEntity, Column, EntitySchema } from "typeorm";
+import type Teacher from "$lib/shared/domain/teacher";
 import AccountEntity from "./account";
 
-const TeacherEntity = new EntitySchema<Teacher>({
-  name: "teacher",
-  target: Teacher,
-  type: "entity-child",
-  columns: {
-    ...AccountEntity.options.columns,
-    email: {
-      type: String,
-      unique: true,
-    },
-    passwordHash: {
-      type: String,
-    },
-  },
-});
+@ChildEntity("teacher")
+class TeacherEntity extends AccountEntity implements Teacher {
+  @Column("text", { unique: true })
+  email: string;
+
+  @Column("text")
+  passwordHash: string;
+}
 
 export default TeacherEntity;

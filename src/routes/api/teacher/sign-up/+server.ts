@@ -7,6 +7,7 @@ import type { RequestHandler } from "./$types";
 const authService = container.resolve(AuthService);
 
 export const POST: RequestHandler = formHandler(async ({ params }) => {
+  console.log("as");
   await authService.signUpTeacher(params.form.email, params.form.password);
   return new Response(null, { status: 204 });
 }, TeacherForm);

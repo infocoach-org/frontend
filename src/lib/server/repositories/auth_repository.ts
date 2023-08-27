@@ -1,6 +1,6 @@
 import type AccountInfo from "$lib/shared/domain/account_info";
 import { DataSource, Repository } from "typeorm";
-import Teacher from "../database/entity/teacher";
+import TeacherEntity from "../database/entity/teacher";
 import type Teacher from "$lib/shared/domain/teacher";
 import { inject, injectable, singleton } from "tsyringe";
 import bcrypt from "bcrypt";
@@ -22,17 +22,24 @@ export class AuthRepository implements IAuthRepository {
   private accountRepo: Repository<Account>;
 
   constructor(@inject(DataSource) dataSource: DataSource) {
-    this.teacherRepo = dataSource.getRepository(Teacher);
+    this.teacherRepo = dataSource.getRepository(TeacherEntity);
     this.accountRepo = dataSource.getRepository(AccountEntity);
   }
 
   async signUpTeacher(email: string, password: string): Promise<void> {
-    const teacherWithSameEmail = await this.teacherRepo.findOneBy({ email });
+    const teacherWithSameEmail = await this.teacherRepo.findOneBy({
+      email,
+      type: AccountType.teacher,
+    });
     if (teacherWithSameEmail) {
       throw error(403);
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    await this.teacherRepo.insert({ email, passwordHash });
+    await this.teacherRepo.insert({
+      email,
+      passwordHash,
+      type: AccountType.teacher,
+    });
   }
   async signInTeacher(email: string, password: string): Promise<AccountInfo> {
     const teacher = await this.teacherRepo.findOneBy({ email });

@@ -1,7 +1,6 @@
-import Account from "./account";
+import type Account from "./account";
 
-export default class Teacher extends Account {
-  constructor(public email: string, public passwordHash: string) {
-    super();
-  }
+export default interface Teacher extends Account {
+  email: string;
+  passwordHash: string;
 }

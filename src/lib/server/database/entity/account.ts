@@ -1,40 +1,24 @@
-import { EntitySchema } from "typeorm";
-import Account from "$lib/shared/domain/account";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from "typeorm";
+import type Account from "$lib/shared/domain/account";
+import AccountType from "$lib/shared/domain/account_type";
 
 //https://github.com/typeorm/typeorm/issues/7323
-const AccountEntity = new EntitySchema<Account>({
-  name: "account",
-  target: Account,
-  columns: {
-    id: {
-      type: Number,
-      primary: true,
-      generated: true,
-      nullable: false,
-    },
-    createdAt: {
-      type: Date,
-      createDate: true,
-    },
-    type: {
-      type: String,
-      // type: "enum",
-      // enum: AccountType,
-    },
-  },
-  inheritance: {
-    pattern: "STI",
-    column: "type",
-  },
-});
 
-// @Entity()
-// @TableInheritance({ column: { type: "varchar", name: "type" } })
-// export class AccountEntity implements Account {
-//   @PrimaryGeneratedColumn()
-//   id: number;
-//   @Column()
-//   createdAt: Date;
-// }
+@Entity("account")
+@TableInheritance({ column: "type" })
+class AccountEntity implements Account {
+  @PrimaryGeneratedColumn("identity")
+  id: number;
+  @CreateDateColumn()
+  createdAt: Date;
+  @Column({ type: "enum", enum: AccountType })
+  type: AccountType;
+}
 
 export default AccountEntity;
