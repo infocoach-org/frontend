@@ -6,13 +6,16 @@ import SettingValue from "$lib/shared/forms/settingValue";
 
 const settingsService = container.resolve(SettingsService);
 
-export const GET: RequestHandler = async ({ params }) => {
-  const value = await settingsService.get(params.setting_name);
+export const GET: RequestHandler = async ({ params, locals }) => {
+  const value = await settingsService.get(
+    locals.accountInfo!.id,
+    params.setting_name
+  );
   return json(value, { status: 200 });
 };
 
-export const PUT: RequestHandler = async ({ params, request }) => {
+export const PUT: RequestHandler = async ({ params, request, locals }) => {
   const value = SettingValue.parse(await request.json());
-  await settingsService.set(params.setting_name, value);
+  await settingsService.set(locals.accountInfo!.id, params.setting_name, value);
   return new Response(null, { status: 204 });
 };

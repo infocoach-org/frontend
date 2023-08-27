@@ -1,17 +1,29 @@
+import {
+  Check,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
+import type Account from "$lib/server/domain/account";
 import type Setting from "$lib/shared/domain/setting";
-import { EntitySchema } from "typeorm";
 
-const SettingEntity = new EntitySchema<Setting>({
-  name: "setting",
-  columns: {
-    name: {
-      type: String,
-      primary: true,
-    },
-    value: {
-      type: String,
-    },
-  },
-});
+@Entity("setting")
+class SettingEntity implements Setting {
+  @PrimaryColumn("varchar")
+  name: string;
+
+  @PrimaryColumn("integer")
+  accountId: number;
+
+  @Column("text")
+  @Check("value <> ''")
+  value: string;
+
+  @ManyToOne("account")
+  @JoinColumn({ name: "accountId" })
+  account: Promise<Account>;
+}
 
 export default SettingEntity;

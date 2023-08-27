@@ -1,12 +1,12 @@
 import type AccountInfo from "$lib/shared/domain/account_info";
 import { DataSource, Repository } from "typeorm";
 import TeacherEntity from "../database/entity/teacher";
-import type Teacher from "$lib/shared/domain/teacher";
+import type Teacher from "$lib/server/domain/teacher";
 import { inject, injectable, singleton } from "tsyringe";
 import bcrypt from "bcrypt";
 import { error } from "@sveltejs/kit";
 import AccountType from "$lib/shared/domain/account_type";
-import type Account from "$lib/shared/domain/account";
+import type Account from "$lib/server/domain/account";
 import AccountEntity from "../database/entity/account";
 
 export interface IAuthRepository {

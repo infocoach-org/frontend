@@ -16,7 +16,6 @@ const noAuthRoutes = [
   "/",
   "/sign-in",
   "/sign-up",
-  "/api/settings/*",
   "/api/teacher/sign-in",
   "/api/teacher/sign-up",
 ];
@@ -38,12 +37,19 @@ export const handle: Handle = async ({ event, resolve }) => {
   if (!needsAuth(event.url.pathname)) {
     return await resolve(event);
   }
+  let rawJWT: string;
   const authCookie = event.cookies.get("AuthorizationToken")?.split(" ");
-  if (!authCookie || authCookie.length !== 2) {
-    // no token
-    throw redirect(307, "/sign-in");
+  if (authCookie && authCookie.length === 2) {
+    rawJWT = authCookie[1];
+  } else {
+    const authHeader = event.request.headers.get("Authorization")?.split(" ");
+    if (authHeader && authHeader.length === 2) {
+      rawJWT = authHeader[1];
+    } else {
+      // no token
+      throw redirect(307, "/sign-in");
+    }
   }
-  const rawJWT = authCookie[1];
   let jwtPayload: JwtPayload;
   try {
     jwtPayload = jwt.verify(rawJWT, JWT_SECRET, {
@@ -57,13 +63,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
     throw redirect(307, "/sign-in");
   }
-  event.locals.userData = {
-    id: jwtPayload.user_id,
+  event.locals.accountInfo = {
+    id: jwtPayload.id,
     type: AccountType.teacher,
   };
 
-  const response = await resolve(event);
-  return response;
+  return await resolve(event);
 };
 
 // export const handleError: HandleServerError = async () => {};
