@@ -5,6 +5,7 @@ import {
   DB_NAME,
   DB_USER,
   DB_PASSWORD,
+  INFO_LOGGING,
 } from "$env/static/private";
 
 import { DataSource } from "typeorm";
@@ -20,6 +21,7 @@ export const dataSource = new DataSource({
   username: DB_USER,
   password: DB_PASSWORD,
   logging: true,
+  loggerLevel: INFO_LOGGING === "TRUE" ? "debug" : "warn",
   synchronize: true,
   entities: [SettingEntity, TeacherEntity, AccountEntity],
   // entities: [__dirname + "/entity/setting.ts"],
