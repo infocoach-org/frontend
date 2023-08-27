@@ -36,7 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "@vavite/node-loader": "^2.0.2",
-    "carbon-components-svelte": "^0.79.0",
+    "carbon-components-svelte": "^0.80.0",
     "eslint": "^8.48.0",
     "eslint-plugin-svelte": "^2.33.0",
     "sass": "^1.65.1",
