@@ -24,7 +24,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@fontsource/fira-mono": "^4.5.10",
+    "@fontsource/fira-mono": "^5.0.8",
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@neoconfetti/svelte": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
