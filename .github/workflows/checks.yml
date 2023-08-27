@@ -8,25 +8,18 @@ on:
     branches: [$default-branch]
 
 jobs:
-  install:
-    name: ready package
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install Packages
-        run: npm i
   eslint:
     name: Run eslint scanning
-    needs: install
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Packages
+        run: npm i
       - name: Run ESLint
         run: npm run lint
           --format @microsoft/eslint-formatter-sarif
@@ -40,12 +33,15 @@ jobs:
           wait-for-processing: true
   svelte-check:
     name: Run eslint scanning
-    needs: install
     runs-on: ubuntu-latest
     permissions:
       contents: read
       security-events: write
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Packages
+        run: npm i
       - name: Run svelte-check
         run: npm run svelte-check
